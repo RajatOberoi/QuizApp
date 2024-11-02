@@ -1,0 +1,9 @@
+.styled-button{
+    background-color: #FF3B3C;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    font-weight: 600;
+    padding: 1em;
+    font-size: 1.2rem; 
+}
