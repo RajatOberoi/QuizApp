@@ -1,10 +1,16 @@
 import "./StyledButton.css"
 
-export default function StyledButton(props) {
+export default function StyledButton({ onClick, disabled, children, className = "", ...rest }) {
+  const buttonClasses = `styled-button ${disabled ? "disabled" : ""} ${className}`;
 
   return (
-    <button className="styled-button" {...props}>
-        {props.children}
+    <button 
+      className={buttonClasses} 
+      onClick={onClick} 
+      disabled={disabled} 
+      {...rest}
+    >
+      {children}
     </button>
-  )
+  );
 }

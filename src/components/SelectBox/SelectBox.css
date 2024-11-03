@@ -1,0 +1,17 @@
+.select-box{
+    background: #F3F4FA;
+    display: flex;
+    align-items: center;
+    gap: 2%;
+    height: 10%;
+    width: 90%;
+    border-radius: 12px;
+    padding: 0.5rem;
+    white-space: normal;
+    text-wrap: wrap;
+    word-wrap: break-word;
+    cursor: pointer;
+}
+.select-box.selected{
+    border: 2px solid #44B77B
+}

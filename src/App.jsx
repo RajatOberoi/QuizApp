@@ -1,23 +1,21 @@
 import './App.css'
-import MainLayout from './components/MainLayout/MainLayout'
-import Logo from "./assets/Frame.svg"
-import Circle from './components/Circle/Circle'
-import StyledButton from './components/StyledButton/StyledButton'
+import { Route,Routes } from 'react-router-dom'
+import QuestionContainer from './pages/QuestionContainer/QuestionContainer'
+import QuizPage from './pages/QuizPage/QuizPage'
+import NoMatch from './pages/NoMatch/NoMatch'
+import ReportPage from './pages/ReportPage/ReportPage'
 
 function App() {
 
   return (
     <div className='app'>
-        <MainLayout style={{
-          "background": "linear-gradient(180deg, rgba(175, 156, 243, 0) 7.92%, #AF9CF3 86.48%)",
-          "backgroundBlendMode":"multiply"
-        }}>
-          <img src={Logo} height={'10%'} width={'20%'} alt="Logo" />
-          <Circle style={{"color":"#FF3B3C"}}>
-            Quiz
-          </Circle>
-          <StyledButton style={{width:"70%",maxWidth:"300px"}}>Start</StyledButton>
-        </MainLayout>
+        <Routes>
+        <Route path="/" element={<QuizPage/>}/>
+        <Route path="/quiz" element={<QuestionContainer />} />
+        <Route path="/getReport" element={<ReportPage />} />
+        <Route path="*" element={<NoMatch />} />
+      </Routes>
+
     </div>
   )
 }
