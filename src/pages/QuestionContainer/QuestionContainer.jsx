@@ -145,7 +145,12 @@ export default function QuestionContainer() {
             "background": "#AF9CF3",
             "paddingTop":0
           }}>
-            <div style={{backgroundImage:`url(${Stars})`,width:'100%',height:'10%',backgroundRepeat:'repeat-x'}}></div>
+            <div style={{
+                width:'100%',height:'10%',
+                backgroundRepeat:'repeat-x'
+                }}>
+                <img height={'100%'} width={'100%'} src={Stars} alt='Stars'/>
+            </div>
             {
                     question?<Paper key={question.id} style={{"height":"70%",width:"90%",display:"flex",flexDirection:"column",justifyContent:"space-evenly",alignItems:"center",padding:"0.5rem",position:"relative"}}>
                         <div style={{position:'absolute',top:'-13%'}}>
