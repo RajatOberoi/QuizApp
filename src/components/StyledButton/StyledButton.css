@@ -5,5 +5,14 @@
     border-radius: 40px;
     font-weight: 600;
     padding: 1em;
-    font-size: 1.2rem; 
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.styled-button.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
