@@ -11,18 +11,15 @@ Setup and Installation
 Clone the repository:
 
 bash
-Copy code
 git clone <repo-url>
 cd <repo-directory>
 Install dependencies:
 
 bash
-Copy code
 npm install
 Start the development server:
 
 bash
-Copy code
 npm run dev
 This will start the app on http://localhost:5173 (or the port configured in your .env).
 
@@ -52,7 +49,6 @@ Choose the plugin that best fits your needs and update your vite.config.js file 
 
 Folder Structure
 plaintext
-Copy code
 ├── public          # Static assets
 ├── src
 │   ├── assets      # Assets such as images and icons
