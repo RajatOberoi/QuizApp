@@ -14,7 +14,7 @@ export default function QuizPage() {
       }}>
         <img src={Logo} height={'20%'} width={'30%'} alt="Logo" />
         <Circle style={{"color":"#FF3B3C"}}>
-          Quiz Latest Check PWA
+          Quiz Just to check reload
         </Circle>
         <StyledButton onClick={()=>navigate('/quiz')} style={{width:"70%",maxWidth:"300px",justifyContent:"center"}}>Start</StyledButton>
       </MainLayout>
