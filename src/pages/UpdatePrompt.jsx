@@ -26,27 +26,27 @@ function UpdatePrompt() {
 
   const [show, setShow] = useState(false);
 
-  useEffect(() => {
-    const intervalId = setInterval(async () => {
-      console.log('Checking for new PWA version...');
-      try {
-        // Get the service worker registration
-        const registration = await navigator.serviceWorker.getRegistration();
-        console.log(registration, 'navigator registration');
-        if (registration) {
-          // Manually trigger the update check
-          await registration.update();
-        } else {
-          console.warn('No service worker registration found.');
-        }
-      } catch (error) {
-        console.error('Error checking for PWA update:', error);
-      }
-    }, PWA_CHECK_INTERVAL);
+  // useEffect(() => {
+  //   const intervalId = setInterval(async () => {
+  //     console.log('Checking for new PWA version...');
+  //     try {
+  //       // Get the service worker registration
+  //       const registration = await navigator.serviceWorker.getRegistration();
+  //       console.log(registration, 'navigator registration');
+  //       if (registration) {
+  //         // Manually trigger the update check
+  //         await registration.update();
+  //       } else {
+  //         console.warn('No service worker registration found.');
+  //       }
+  //     } catch (error) {
+  //       console.error('Error checking for PWA update:', error);
+  //     }
+  //   }, PWA_CHECK_INTERVAL);
 
-    // Clear the interval when the component unmounts
-    return () => clearInterval(intervalId);
-  }, []);
+  //   // Clear the interval when the component unmounts
+  //   return () => clearInterval(intervalId);
+  // }, []);
   console.log(needRefresh, 'need refresh');
   // ### 2. ROBUST SKIP & PROMPT LOGIC ###
   // This effect determines whether to show the prompt
