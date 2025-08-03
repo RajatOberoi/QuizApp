@@ -5,6 +5,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
+import { Typography } from '@mui/material';
 
 const PWA_CHECK_INTERVAL = 30000;
 
@@ -37,7 +38,7 @@ function UpdatePrompt() {
       setNeedRefresh(true);
     },
   });
-
+  console.log(needRefresh,"need refresh")
   const [show, setShow] = useState(false);
 
   useEffect(() => {
