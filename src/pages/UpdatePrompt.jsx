@@ -11,10 +11,24 @@ const PWA_CHECK_INTERVAL = 3000;
 function UpdatePrompt() {
   const {
     needRefresh: [needRefresh, setNeedRefresh],
-    updateServiceWorker,
   } = useRegisterSW({
-    onRegisteredSW(swScriptUrl, registration) {
-      console.log(swScriptUrl, 'url script', registration, 'registration');
+    onRegisteredSW(swUrl, r) {
+      r &&
+        setInterval(async () => {
+          if (r.installing || !navigator) return;
+
+          if ('connection' in navigator && !navigator.onLine) return;
+
+          const resp = await fetch(swUrl, {
+            cache: 'no-store',
+            headers: {
+              cache: 'no-store',
+              'cache-control': 'no-cache',
+            },
+          });
+
+          if (resp?.status === 200) await r.update();
+        }, PWA_CHECK_INTERVAL);
     },
     onRegisterError(error) {
       console.log(error, 'error during registration');
@@ -27,54 +41,28 @@ function UpdatePrompt() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const intervalId = setInterval(async () => {
-      console.log('Checking for new PWA version...');
-      try {
-        // Get the service worker registration
-        const registration = await navigator.serviceWorker.getRegistration();
-        console.log(registration, 'navigator registration');
-        if (registration) {
-          // Manually trigger the update check
-          await registration.update();
-        } else {
-          console.warn('No service worker registration found.');
-        }
-      } catch (error) {
-        console.error('Error checking for PWA update:', error);
-      }
-    }, PWA_CHECK_INTERVAL);
-
-    // Clear the interval when the component unmounts
-    return () => clearInterval(intervalId);
-  }, []);
-  console.log(needRefresh, 'need refresh');
-  // ### 2. ROBUST SKIP & PROMPT LOGIC ###
-  // This effect determines whether to show the prompt
-  useEffect(() => {
     if (needRefresh) {
-      // Check sessionStorage to see if the user has already skipped this update
       const isUpdateSkipped =
         sessionStorage.getItem('updateSkipped') === 'true';
-      // Show the prompt if not skipped
       if (!isUpdateSkipped) {
         setShow(true);
       }
     }
   }, [needRefresh]);
 
-  // ### 3. USER ACTIONS (RELOAD / SKIP) ###
-  /**
-   * Called when the user clicks the "Reload" button.
-   * Installs the new service worker and reloads the page.
-   */
-  const handleReload = () => {
-    updateServiceWorker(true);
+  const handleReload = async () => {
+    try {
+      // navigator.serviceWorker.addEventListener('controllerchange', () => {
+      //   window.location.reload();
+      // });
+      // console.log('I am in handle reload');
+      // updateServiceWoker();
+      window.location.reload()
+    } catch (error) {
+      console.error('Error updating service worker:', error);
+    }
   };
 
-  /**
-   * Called when the user clicks the "Skip" button.
-   * Hides the prompt and marks the update as skipped for the session.
-   */
   const handleSkip = () => {
     sessionStorage.setItem('updateSkipped', 'true');
     setShow(false);
@@ -86,16 +74,21 @@ function UpdatePrompt() {
 
   return (
     <Dialog open={show} onClose={handleSkip}>
-      <DialogTitle>Update Available</DialogTitle>
-      <DialogContent>
-        A new version is available. Reload to update?
+      <DialogTitle>
+        <Typography variant="h6">Application Update</Typography>
+      </DialogTitle>
+      <DialogContent dividers>
+        <Typography>
+          A new version of the application is available.Choose Yes to reload and
+          update
+        </Typography>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleReload} color="primary">
-          Reload
+        <Button onClick={handleSkip} variant="secondary">
+          {Common.NO}
         </Button>
-        <Button onClick={handleSkip} color="secondary">
-          Skip
+        <Button onClick={handleReload} variant="primary">
+          {Common.YES}
         </Button>
       </DialogActions>
     </Dialog>
