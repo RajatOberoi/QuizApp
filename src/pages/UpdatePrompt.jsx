@@ -7,7 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
 
-const PWA_CHECK_INTERVAL = 30000;
+const PWA_CHECK_INTERVAL = 10000;
 
 function UpdatePrompt() {
   const {
