@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 
-const PWA_CHECK_INTERVAL = 3000;
+const PWA_CHECK_INTERVAL = 30000;
 
 function UpdatePrompt() {
   const {
