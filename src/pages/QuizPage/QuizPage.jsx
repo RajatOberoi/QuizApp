@@ -14,7 +14,7 @@ export default function QuizPage() {
       }}>
         <img src={Logo} height={'20%'} width={'30%'} alt="Logo" />
         <Circle style={{"color":"#FF3B3C"}}>
-          Quiz Interval New Logic 30 sec Update
+          Quiz Interval New Logic 30 sec Update new
         </Circle>
         <StyledButton onClick={()=>navigate('/quiz')} style={{width:"70%",maxWidth:"300px",justifyContent:"center"}}>Start</StyledButton>
       </MainLayout>
