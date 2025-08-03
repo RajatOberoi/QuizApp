@@ -13,24 +13,24 @@ function UpdatePrompt() {
   const {
     needRefresh: [needRefresh, setNeedRefresh],
   } = useRegisterSW({
-    onRegisteredSW(swUrl, r) {
-      r &&
-        setInterval(async () => {
-          if (r.installing || !navigator) return;
+    // onRegisteredSW(swUrl, r) {
+    //   r &&
+    //     setInterval(async () => {
+    //       if (r.installing || !navigator) return;
 
-          if ('connection' in navigator && !navigator.onLine) return;
+    //       if ('connection' in navigator && !navigator.onLine) return;
 
-          const resp = await fetch(swUrl, {
-            cache: 'no-store',
-            headers: {
-              cache: 'no-store',
-              'cache-control': 'no-cache',
-            },
-          });
+    //       const resp = await fetch(swUrl, {
+    //         cache: 'no-store',
+    //         headers: {
+    //           cache: 'no-store',
+    //           'cache-control': 'no-cache',
+    //         },
+    //       });
 
-          if (resp?.status === 200) await r.update();
-        }, PWA_CHECK_INTERVAL);
-    },
+    //       if (resp?.status === 200) await r.update();
+    //     }, PWA_CHECK_INTERVAL);
+    // },
     onRegisterError(error) {
       console.log(error, 'error during registration');
     },
@@ -38,8 +38,27 @@ function UpdatePrompt() {
       setNeedRefresh(true);
     },
   });
-  console.log(needRefresh,"need refresh")
+  console.log(needRefresh, 'need refresh');
   const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const intervalId = setInterval(async () => {
+            if (!navigator) return;
+            if ('connection' in navigator && !navigator.onLine) return;
+      try {
+        const registration = await navigator.serviceWorker.getRegistration();
+        if (registration) {
+          await registration.update();
+        } else {
+          console.warn('No service worker registration found.');
+        }
+      } catch (error) {
+        console.error('Error checking for PWA update:', error);
+      }
+    }, PWA_CHECK_INTERVAL);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   useEffect(() => {
     if (needRefresh) {
@@ -58,7 +77,7 @@ function UpdatePrompt() {
       // });
       // console.log('I am in handle reload');
       // updateServiceWoker();
-      window.location.reload()
+      window.location.reload();
     } catch (error) {
       console.error('Error updating service worker:', error);
     }
@@ -85,12 +104,8 @@ function UpdatePrompt() {
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleSkip} variant="secondary">
-          {Common.NO}
-        </Button>
-        <Button onClick={handleReload} variant="primary">
-          {Common.YES}
-        </Button>
+        <Button onClick={handleSkip}>'NO'</Button>
+        <Button onClick={handleReload}>'YEs'</Button>
       </DialogActions>
     </Dialog>
   );
